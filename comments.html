@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ADMIN</title>
+</head>
+
+<body>
+<a href="/adminsecretpage">HOME</a>
+  <div>
+  <h2>Search for comments</h2>
+  <input id="username" type="text" placeholder="username" required></input>
+  <input id="comment" type="text" placeholder="actual comment" required></input>
+  <button id="searchb" onclick="sss()">Search</button>
+  <p id="alerts"></p>
+  </div>
+  <table >
+  <tr>
+    <th>User Name</th>
+    <th>Comment</th>
+    <th>Delete</th>
+  </tr>
+ 
+
+  {% for i in range(ll) %}
+
+   <tr>
+    <td>{{u[i]}}</td>
+    <td>{{c[i]}}</td>
+    <td><button id="del" onclick="delete1({{cid[i]}})">DELETE</button></td>
+    
+  </tr>
+
+{% endfor %}
+</table>
+<script>
+   function sss(){
+    var sss=document.getElementById("username").value;
+    var ssss=document.getElementById("comment").value;
+    document.location.href='/adminsecretpage/comments/'+sss+"/"+ssss
+    }
+    function delete1(para){
+    var sss=document.getElementById("username").value;
+    var ssss=document.getElementById("comment").value;
+    console.log(sss)
+    fetch('http://127.0.0.1:5000/searchpost',{method:'DELETE',headers:{'cid':para}}).then(function(results){ if(results.status === 400) {
+       document.getElementById("alerts").innerHTML="comment is already deleted";
+       } if(results.status === 200){location.reload();}; return results.json()}).then(function(data){console.log(data); });
+    }
+    
+   
+   
+  </script>
+</body>
+
+</html>

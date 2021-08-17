@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ADMIN</title>
+</head>
+
+<body>
+  <div>
+  <h2>Search for videos</h2>
+  <input id="search" type="text" placeholder="search videos"></input>
+  <button id="searchb" onclick="ss()">Search</button>
+  <p id="alerts"></p>
+  </div>
+  <div>
+  <h2>Search for comments</h2>
+  <input id="username" type="text" placeholder="username" required></input>
+  <input id="comment" type="text" placeholder="actual comment" required></input>
+  <button id="searchb" onclick="sss()">Search</button>
+  <p id="alerts"></p>
+  </div>
+<script>
+   
+    function ss(){
+    var sss=document.getElementById("search").value;
+    document.location.href='/adminsecretpage/posts/'+sss
+    }
+    
+    function sss(){
+    var sss=document.getElementById("username").value;
+    var ssss=document.getElementById("comment").value;
+    document.location.href='/adminsecretpage/comments/'+sss+"/"+ssss
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Register</title>
+</head>
+
+<body>
+  <form method="POST" onsubmit="return check();">
+    <p><b>Login</b></p>
+    <input type="username"  id= "username" name="username" placeholder="username" required>   
+    <input type="password" name="password" placeholder="Password" id="password" required>
+    <p id='alerts'></p>
+    <button type="button" onclick="check()" name="Submit"><b>Submit</b>  </button>
+</form>
+<a href="/newuser">Sign up</a>
+<script>
+    function check(){
+    
+    var username=document.getElementById("username").value; 
+    var secret=document.getElementById("password").value; 
+    fetch('http://127.0.0.1:5000/login',{method:'POST',headers:{'username':username,'password':secret}}).then(function(results){ if(results.status === 400) {
+       document.getElementById("alerts").innerHTML="Username or password is worng";
+       } if(results.status === 200){document.location.href='/profile'}; return results.json()}).then(function(data){console.log(data); });
+    
+    }
+    
+    
+  </script>
+</body>
+
+</html>

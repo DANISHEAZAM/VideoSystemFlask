@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Profile</title>
+</head>
+
+<body>
+ <h1>WELCOME {{username}}</h1>
+
+ {% for key, value in data.items() %}
+  <ul><li>{{key}} : {{value}}</li></ul>
+
+{% endfor %}
+
+ <button type="button" onclick="check()" name="logout"><b>Logout</b>  </button>
+  <button type="button" onclick="videolist()" name="videolist"><b>videos</b>  </button>
+
+
+
+<form method="post" action="/uploader" enctype="multipart/form-data">
+    <dl>
+		<p>
+			<input type="file" name="file" autocomplete="off" required>
+		</p>
+    </dl>
+    <p>
+        
+		<input  type="submit" value="Upload">
+	</p>
+</form>
+{% for path,name in gold.items() %}
+
+
+  <ol><li><a href="/play/{{name}}$id={{rr}}">{{name}}</a></li></ol>
+
+{% endfor %}
+{% for path,name in file_list.items() %}
+
+
+  <ul><li><a href="/play{{name}}$id={{rr}}">{{name}}</a></li></ul>
+
+{% endfor %}
+
+
+<script>
+
+   function check(){
+    document.location.href="/logout";
+    }
+    function videolist(){
+    document.location.href="/profile";
+    }
+    
+    
+    
+  </script>
+</body>
+
+</html>

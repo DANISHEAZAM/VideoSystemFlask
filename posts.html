@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ADMIN</title>
+</head>
+
+<body>
+<a href="/adminsecretpage">HOME</a>
+  <div>
+  
+  <h2>Searched videos</h2>
+  <input id="search" type="text" placeholder="search videos"></input>
+  <button id="searchb" onclick="ss()">Search</button>
+  
+  </div>
+  <p id="alerts"></p>
+  <table >
+  <tr>
+    <th>Video Name</th>
+    <th>Delete</th>
+    <th>Add to Gold</th>
+  </tr>
+ 
+
+  {% for i in range(ll) %}
+
+   <tr>
+    <td>{{videoname[i]}}</td>
+    <td><button id="del" onclick="delete1({{videoid[i]}})">DELETE</button></td>
+    <td><button id="gold" onclick="makegold({{videoid[i]}})">GOLD</button></td>
+  </tr>
+
+{% endfor %}
+</table>
+<script>
+   function ss(){
+    var sss=document.getElementById("search").value;
+    document.location.href='/adminsecretpage/posts/'+sss
+    }
+    function delete1(para){
+    var sss=document.getElementById("search").value;
+    console.log(sss)
+    fetch('http://127.0.0.1:5000/adminpost',{method:'DELETE',headers:{'videoid':para}}).then(function(results){ if(results.status === 400) {
+       document.getElementById("alerts").innerHTML="Video is already deleted";
+       } if(results.status === 200){location.reload();}; return results.json()}).then(function(data){console.log(data); });
+    }
+    
+    function makegold(para){
+    var sss=document.getElementById("search").value;
+    console.log(sss)
+    fetch('http://127.0.0.1:5000/adminpost',{method:'PUT',headers:{'videoid':para}}).then(function(results){ if(results.status === 400) {
+       document.getElementById("alerts").innerHTML="Video is already GOLD";
+       } if(results.status === 200){document.getElementById("alerts").innerHTML="Added to GOLD";}; return results.json()}).then(function(data){console.log(data); });
+    }
+   
+  </script>
+</body>
+
+</html>

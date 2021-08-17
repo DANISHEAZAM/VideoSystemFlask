@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Video Example</title>
+</head>
+<body>
+<a href="/profile">HOME</a>
+  <h2>{{filename}}</h2>
+  <video width="320" height="240" controls>
+    <source src={{ url_for('static', filename=filename) }} type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <button type="button" id="like" onclick="like()" name="like">like</button> 
+  <button type="button" onclick="follow()" id="follow" name="follow">follow author</button>
+  <button type="button" ><b><p>Uploaded by : <span id ="name">{{author}}</span></p> </b>
+  <input type="text" id="cmt" placeholder="add comment"></input>
+   <button type="button" onclick="comment()">comment</button>
+  {% for i in range(l) %}
+  <ul><li><p>{{users[i]}} : {{comments[i]}}</p></li></ul>
+
+{% endfor %}
+{% for path,name in gold.items() %}
+
+
+  <ol><li><a href="/play/{{name}}$id={{rr}}">{{name}}</a></li></ol>
+
+{% endfor %}
+  {% for path,name in file_list.items() %}
+  <ul><li><a href="/play{{name}}$id={{rr}}">{{name}}</a></li></ul>
+
+{% endfor %}
+  <script>
+   function like(){
+   if(document.getElementById("like").innerHTML=="like"){
+    document.getElementById("like").innerHTML="Dislike";
+    fetch('http://127.0.0.1:5000/like',{method:'POST',headers:{'filename':'{{filename}}','author':'{{author}}','like':'like'}}).then(function(results){return results.json()}).then(function(data){console.log(data); });
+    }
+    else if(document.getElementById("like").innerHTML=="Dislike"){document.getElementById("like").innerHTML="like";
+    fetch('http://127.0.0.1:5000/like',{method:'POST',headers:{'filename':'{{filename}}','author':'{{author}}','like':'Dislike'}}).then(function(results){return results.json()}).then(function(data){console.log(data); });
+    }
+    
+
+    }
+    function follow(){
+    if(document.getElementById("follow").innerHTML=="follow author"){
+        fetch('http://127.0.0.1:5000/follow',{method:'POST',headers:{'author':'{{author}}','follow':'follow author'}}).then(function(results){return results.json()}).then(function(data){console.log(data); });
+
+    document.getElementById("follow").innerHTML="unfollow auhtor";
+    
+    }
+    else if(document.getElementById("follow").innerHTML=="unfollow auhtor"){document.getElementById("follow").innerHTML="follow author";
+    fetch('http://127.0.0.1:5000/follow',{method:'POST',headers:{'author':'{{author}}','follow':'unfollow auhtor'}}).then(function(results){return results.json()}).then(function(data){console.log(data); });
+
+    }
+    }
+    
+    function comment(){
+    var cmt=document.getElementById("cmt").value
+    fetch('http://127.0.0.1:5000/comment',{method:'POST',headers:{'author':'{{session['username']}}','videoid':'{{video_id}}','comment':cmt}}).then(function(results){return results.json()}).then(function(data){console.log(data);document.location.href='/play/{{filename}}$id={{rr}}' });
+    }
+    
+    
+    
+  </script>
+</body>
+
+</html>

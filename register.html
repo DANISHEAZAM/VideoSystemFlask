@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Register</title>
+</head>
+
+<body>
+  <form method="POST" onsubmit="return check();">
+    <p><b>Register</b></p>
+    <input type="username"  id= "username" name="username" placeholder="username" required>   
+    <input type="password" name="password" placeholder="Password" id="password" required>
+    <input type="text" name="bio" placeholder="bio" id="bio" required>
+    <input type="text" name="interests" placeholder="interests" id="interests" required>
+    <input type="text" name="hobbies" placeholder="hobbies" id="hobbies" required>
+    
+    <button type="button" onclick="check()" name="Submit"><b>Submit</b>  </button>
+</form>
+<p id="alerts"></p>
+<script>
+    function check(){
+    
+    var username=document.getElementById("username").value; 
+    var secret=document.getElementById("password").value;
+    var bio=document.getElementById("bio").value;
+    var interests=document.getElementById("interests").value; 
+    var hobbies=document.getElementById("hobbies").value; 
+    var payload={
+    'interests':interests,
+    'hobbies':hobbies};
+    
+    
+    fetch('http://127.0.0.1:5000/register',{method:'POST',headers:{'username':username,'password':secret,'bio':bio,'payload':JSON.stringify(payload)}}).then(function(results){if(results.status === 400) {
+       document.getElementById("alerts").innerHTML="Username already exists";
+       }if(results.status === 200){document.location.href="/home";};return results.json()}).then(function(data){console.log(data);});
+    
+    }
+    
+    
+  </script>
+</body>
+
+</html>
